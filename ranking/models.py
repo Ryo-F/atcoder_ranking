@@ -30,12 +30,13 @@ class User(AbstractBaseUser):
     REQUIRED_FIELDS = ['email']
 
     def __str__(self):
-        return self.user_name
+        return self.identifier
 
 
 class Result(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    result_question = models.IntegerField(default=0)
+    result_question = models.CharField(max_length=30, default='')
+    result_language = models.CharField(max_length=30, default='')
     result_coding_time = models.IntegerField(default=0)
     result_running_time = models.IntegerField(default=0)
     pub_date = models.DateTimeField('date published')

@@ -10,7 +10,7 @@
                         <h3 class="panel-title">Please Sign In</h3>
                     </div>
                     <div class="panel-body">
-                        <form action="../login/" method="POST" role="form">
+                        <form action="/ranking/login/" method="POST" role="form">
                             <fieldset>
                                     <p>{{ form.non_field_errors }}</p>
                                       {{ form.username }}<br />
@@ -19,8 +19,8 @@
                                       <input type="hidden" name="next" value={{ next }} />
 
                                 <!-- Change this to a button or input when using this as a form -->
-                                <input type="submit" href="" class="btn btn-lg btn-success btn-block" value="Login">
-                                <a href="../create" class="btn btn-lg btn-info btn-block" >Sign up</a>
+                                <input type="submit" href="/ranking/" class="btn btn-lg btn-success btn-block" value="Login">
+                                <a href="/ranking/create" class="btn btn-lg btn-info btn-block" >Sign up</a>
 
                             </fieldset>
                         </form>
