@@ -35,7 +35,7 @@ class User(AbstractBaseUser):
 
 class Result(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    result_question = models.CharField(max_length=30, default='')
+    result_problem = models.CharField(max_length=30, default='')
     result_language = models.CharField(max_length=30, default='')
     result_coding_time = models.IntegerField(default=0)
     result_running_time = models.IntegerField(default=0)

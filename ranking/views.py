@@ -7,14 +7,13 @@ from django.contrib.auth import views as auth_views
 from django.views.generic import TemplateView, CreateView
 from django.core.urlresolvers import reverse_lazy
 
-from .forms import RegisterForm, LoginForm
+from .forms import RegisterForm, CreatePostsForm, LoginForm
 
 # Create your views here.
 
 
 class TopView(TemplateView):
     template_name = 'top.html'
-    context_object_name = 'latest_rank'
 
     def get(self, request, *args, **kwargs):
         context = super(TopView, self).get_context_data(**kwargs)
@@ -24,7 +23,6 @@ class TopView(TemplateView):
 
 class IndexView(LoginRequiredMixin, TemplateView):
     template_name = 'index.html'
-    context_object_name = 'latest_rank'
 
     def get(self, request, *args, **kwargs):
         context = super(IndexView, self).get_context_data(**kwargs)
@@ -34,10 +32,14 @@ class IndexView(LoginRequiredMixin, TemplateView):
 
 class MyPageView(LoginRequiredMixin, TemplateView):
     template_name = 'mypage.html'
-    context_object_name = 'latest_rank'
 
     def get(self, request, *args, **kwargs):
         context = super(MyPageView, self).get_context_data(**kwargs)
+        current_user = request.user.id
+        print(current_user)
+        results = Result.objects.prefetch_related()
+        context['results'] = results
+        context['current_user'] = current_user
         return render(self.request, self.template_name, context)
 
 
@@ -56,13 +58,42 @@ class UsersView(LoginRequiredMixin, TemplateView):
         return render(self.request, self.template_name, context)
 
 
-class QuestionsView(LoginRequiredMixin, TemplateView):
-    template_name = 'questions.html'
+class ProblemsView(LoginRequiredMixin, TemplateView):
+    template_name = 'problems.html'
     context_object_name = 'latest_rank'
 
     def get(self, request, *args, **kwargs):
-        context = super(QuestionsView, self).get_context_data(**kwargs)
+        context = super(ProblemsView, self).get_context_data(**kwargs)
         return render(self.request, self.template_name, context)
+
+
+class CreatePostsView(LoginRequiredMixin, TemplateView):
+    template_name = 'create_posts.html'
+    form_class = CreatePostsForm
+    initial = [
+        {'result_problem': 'AtCoder Beginner Contest 064'},
+        {'result_language': 'Python'},
+        {'result_code': 'Code'}
+    ]
+
+    def get(self, request, *args, **kwargs):
+        context = super(CreatePostsView, self).get_context_data(**kwargs)
+        results = Result.objects.prefetch_related()
+        context['results'] = results
+        return render(self.request, self.template_name, context)
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            package = Package.objects.create(result_problem=data['result_problem'],
+                                             result_language=data['result_language'],
+                                             result_coding_time=data['result_coding_time'],
+                                             result_running_time=data['result_running_time'],
+                                             pub_date=data['pub_date'],
+                                             result_code=data['result_code']
+                                             )
+        return render(self.request, self.template_name, {'form': form})
 
 
 class PostsView(LoginRequiredMixin, TemplateView):

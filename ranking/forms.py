@@ -33,6 +33,36 @@ class RegisterForm(UserCreationForm):
         self.fields['password2'].widget.attrs['placeholder'] = 'パスワード（確認）'
 
 
+class CreatePostsForm(forms.ModelForm):
+    result_problem = forms.CharField()
+    result_language = forms.CharField()
+    result_coding_time = forms.IntegerField()
+    result_running_time = forms.IntegerField()
+    pub_date = forms.DateTimeField('date published')
+    result_code = forms.CharField(
+        widget=forms.Textarea, max_length=500, required=False)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields['result_problem'].widget.attrs['class'] = 'form-control'
+        self.fields['result_problem'].widget.attrs['placeholder'] = 'Problem'
+
+        self.fields['result_language'].widget.attrs['class'] = 'form-control'
+        self.fields['result_language'].widget.attrs['placeholder'] = 'Language'
+
+        self.fields['result_coding_time'].widget.attrs['class'] = 'form-control'
+        self.fields['result_coding_time'].widget.attrs['placeholder'] = 'Coding_Time'
+
+        self.fields['result_running_time'].widget.attrs['class'] = 'form-control'
+        self.fields['result_running_time'].widget.attrs['placeholder'] = 'Running_Time'
+
+        self.fields['pub_date'].widget.attrs['class'] = 'form-control'
+
+        self.fields['result_code'].widget.attrs['class'] = 'form-control'
+        self.fields['result_code'].widget.attrs['class'] = 'Code'
+
+
 class LoginForm(AuthenticationForm):
 
     def __init__(self, *args, **kwargs):

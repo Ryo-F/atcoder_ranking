@@ -20,7 +20,7 @@
                         <thead>
                             <tr>
                                 <th>User</th>
-                                <th>Question</th>
+                                <th>Problem</th>
                                 <th>Language</th>
                                 <th>Coding Time</th>
                                 <th>Runnning Time</th>
@@ -42,7 +42,7 @@
                           {% for result in results %}
                             <tr>
                               <td>{{result.user}}</td>
-                              <td>{{result.result_question}}</td>
+                              <td>{{result.result_problem}}</td>
                               <td>{{result.result_language}}</td>
                               <td>{{result.result_coding_time}}</td>
                               <td>{{result.result_running_time}}</td>
@@ -58,9 +58,7 @@
                     </table>
                     <!-- /.table-responsive -->
                     <div class="well">
-                        <h4>DataTables Usage Information</h4>
-                        <p>DataTables is a very flexible, advanced tables plugin for jQuery. In SB Admin, we are using a specialized version of DataTables built for Bootstrap 3. We have also customized the table headings to use Font Awesome icons in place of images. For complete documentation on DataTables, visit their website at <a target="_blank" href="https://datatables.net/">https://datatables.net/</a>.</p>
-                        <a class="btn btn-default btn-lg btn-block" target="_blank" href="https://datatables.net/">View DataTables Documentation</a>
+                      <a class="btn btn-default btn-lg btn-block" href="/ranking/create_posts/">Create New</a>
                     </div>
                 </div>
                 <!-- /.panel-body -->
