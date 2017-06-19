@@ -10,11 +10,6 @@ from atcoder_ranking.commons import *
 
 from .forms import RegisterForm, CreatePostsForm, LoginForm
 from .models import *
-from bs4 import BeautifulSoup
-import requests
-import re
-
-# Create your views here.
 
 
 class TopView(TemplateView):
@@ -24,9 +19,6 @@ class TopView(TemplateView):
         context = super(TopView, self).get_context_data(**kwargs)
 
         return render(self.request, self.template_name, context)
-
-
-# class LoggedInView(LoginRequiredMixin, TemplateView)
 
 
 class IndexView(LoginRequiredMixin, TemplateView):
