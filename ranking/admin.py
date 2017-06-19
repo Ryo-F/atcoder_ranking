@@ -1,6 +1,6 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import User, Result
+from .models import *
 
-admin.site.register([Result, User])
+admin.site.register([Result, User, AtCoderProblem])

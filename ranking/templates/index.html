@@ -55,32 +55,35 @@
                           <div class="table-responsive">
                               <table class="table table-striped">
                                   <thead>
-                                      <tr>
-                                          <th>#</th>
-                                          <th>First Name</th>
-                                          <th>Last Name</th>
-                                          <th>Username</th>
-                                      </tr>
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>User</th>
+                                            <th>Problem</th>
+                                            <th>Language</th>
+                                            <th>Coding Time</th>
+                                            <th>Runnning Time</th>
+                                            <th>Pub Date</th>
+                                            <th>Code</th>
+                                        </tr>
+                                    </thead>
                                   </thead>
-                                  <tbody>
-                                      <tr>
-                                          <td>1</td>
-                                          <td>Mark</td>
-                                          <td>Otto</td>
-                                          <td>@mdo</td>
-                                      </tr>
-                                      <tr>
-                                          <td>2</td>
-                                          <td>Jacob</td>
-                                          <td>Thornton</td>
-                                          <td>@fat</td>
-                                      </tr>
-                                      <tr>
-                                          <td>3</td>
-                                          <td>Larry</td>
-                                          <td>the Bird</td>
-                                          <td>@twitter</td>
-                                      </tr>
+                                  {% for result in results %}
+                                    <tr>
+                                      <td>{{ forloop.counter }}</td>
+                                      <td>{{result.user}}</td>
+                                      <td>{{result.result_problem.problem_name}}</td>
+                                      <td>{{result.result_language}}</td>
+                                      <td>{{result.result_coding_time}}</td>
+                                      <td>{{result.result_running_time}}</td>
+                                      <td>{{result.pub_date}}</td>
+                                      <td>
+                                        {% if result.result_code  %}
+                                        <a href='/ranking/posts/{{result.id}}'>◯</a></td>
+                                        {% endif %}
+                                      </td>
+                                    </tr>
+                                  {% endfor %}
                                   </tbody>
                               </table>
                           </div>
@@ -100,7 +103,7 @@
                                   <i class="fa fa-comments fa-5x"></i>
                               </div>
                               <div class="col-xs-9 text-right">
-                                  <div class="huge">26</div>
+                                  <div class="huge">0</div>
                                   <div>New Comments!</div>
                               </div>
                           </div>

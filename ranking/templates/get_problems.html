@@ -5,51 +5,56 @@
     <div class="col-md-8 col-md-offset-3">
       <div class="login-panel panel panel-default">
           <div class="panel-heading">
-              <h3 class="panel-title">Sign Up</h3>
+              <h3 class="panel-title">Create New Problem</h3>
           </div>
           <div class="panel-body">
-            <form action="/ranking/create/" method="POST">
+            <form action="/ranking/create_posts/" method="POST">
              <div class="row">
                <div class="col-sm-10 offset-sm-1">
                 <div class="card">
                   <div class="card-block">
+                    {% csrf_token %}
                    <div class="row">
                      <div class="col-xs-12 col-sm-6">
                        <div class="form-group">
-                        {{ form.username }}
-                        {{ form.username.errors }}
+                        {{ form.result_problem }}
+                        {{ form.result_problem.errors }}
                       </div>
                      </div>
                       <div class="col-xs-12 col-sm-6">
                         <div class="form-group">
-                        {{ form.email }}
+                        {{ form.result_language }}
                       </div>
                      </div>
                    </div>
                    <div class="row">
                      <div class="col-xs-12 col-sm-6">
                        <div class="form-group">
-                        {{ form.password1 }}
-                        {{ form.password1.errors }}
+                        {{ form.result_coding_time }}
+                        {{ form.result_coding_time.errors }}
                       </div>
                      </div>
                       <div class="col-xs-12 col-sm-6">
                         <div class="form-group">
-                        {{ form.password2 }}
-                        {{ form.password2.errors }}
+                        {{ form.result_running_time }}
                       </div>
                      </div>
                    </div>
                     <div class="row">
                      <div class="col-xs-12 col-sm-6">
                        <div class="form-group">
-                        {{ form.arc_user_name }}
+                        {{ form.pub_date }}
+                        {{ form.pub_date.error}}
                       </div>
                      </div>
+                      <div class="col-xs-12 col-sm-6">
+                        <div class="form-group">
+                        {{ form.result_code }}
+                      </div>
                      </div>
                    </div>
                    {% csrf_token %}
-                   <button type="submit" class="btn btn-lg btn-success btn-block">Sign Up</button>
+                   <button type="submit" class="btn btn-lg btn-success btn-block">Create</button>
                  </div>
                 </div>
               </div>

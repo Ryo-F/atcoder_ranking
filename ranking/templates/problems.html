@@ -1,4 +1,63 @@
 {% extends "base.html" %}
 {% block body %}
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Contests</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                  Problem Archives
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+                        <thead>
+                            <tr>
+                                <th>Problem</th>
+                                <th>A</th>
+                                <th>B</th>
+                                <th>C</th>
+                                <th>D</th>
+                                {% if problem.task_e  %}
+                                <th>E</th>
+                                <th>F</th>
+                                {% endif %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                          {% for problem in problems %}
+                          {% autoescape off %}
+                            <tr>
+                              <td>{{problem.problem_name}}</td>
+                              <td>{{problem.task_a}}</td>
+                              <td>{{problem.task_b}}</td>
+                              <td>{{problem.task_c}}</td>
+                              <td>{{problem.task_d}}</td>
+                                {% if problem.task_e  %}
+                                <td>{{problem.task_e}}</td>
+                                <td>{{problem.task_f}}</td>
+                                {% endif %}
+                            </tr>
+                            {% endautoescape %}
+                          {% endfor %}
 
+                        </tbody>
+                    </table>
+                    <!-- /.table-responsive -->
+                    <div class="well">
+                      <a class="btn btn-default btn-lg btn-block" href="/ranking/get_problems/">Create New</a>
+                    </div>
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
 {% endblock %}
