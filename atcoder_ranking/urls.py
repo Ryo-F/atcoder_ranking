@@ -1,8 +1,6 @@
 from django.conf.urls import url, include
 from django.contrib import admin
 from django.views.generic import TemplateView
-from django.contrib.auth import views as auth_views
-# import ranks.views as ranks_view
 import ranking.views as ranking_view
 
 urlpatterns = [
@@ -24,6 +22,6 @@ urlpatterns = [
         ranking_view.PostsDetailView.as_view()),
     url(r'^ranking/create_posts/$', ranking_view.CreatePostsView.as_view()),
     url(r'^ranking/info/$', TemplateView.as_view(template_name='user_info.html')),
-    url(r'^ranking/login/$', ranking_view.login, name='login'),
+    url(r'^ranking/login/$', ranking_view.LoginView.as_view(), name='login'),
     url(r'^ranking/logout/$', ranking_view.logout, name='logout')
 ]

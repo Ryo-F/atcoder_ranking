@@ -17,48 +17,24 @@
                    <div class="row">
                      <div class="col-xs-12 col-sm-6">
                        <div class="form-group">
-                        {{ form.result_problem }}
-                        {{ form.result_problem.errors }}
+                        {{ form.problem_name }}
+                        {{ form.problem_name.errors }}
                       </div>
                      </div>
                       <div class="col-xs-12 col-sm-6">
                         <div class="form-group">
-                        {{ form.result_language }}
+                        {{ form.problem_num }}
+                        {{form.problem_num.errors}}
+                        </div>
                       </div>
-                     </div>
-                   </div>
-                   <div class="row">
-                     <div class="col-xs-12 col-sm-6">
-                       <div class="form-group">
-                        {{ form.result_coding_time }}
-                        {{ form.result_coding_time.errors }}
-                      </div>
-                     </div>
-                      <div class="col-xs-12 col-sm-6">
-                        <div class="form-group">
-                        {{ form.result_running_time }}
-                      </div>
-                     </div>
-                   </div>
-                    <div class="row">
-                     <div class="col-xs-12 col-sm-6">
-                       <div class="form-group">
-                        {{ form.pub_date }}
-                        {{ form.pub_date.error}}
-                      </div>
-                     </div>
-                      <div class="col-xs-12 col-sm-6">
-                        <div class="form-group">
-                        {{ form.result_code }}
-                      </div>
-                     </div>
-                   </div>
-                   {% csrf_token %}
-                   <button type="submit" class="btn btn-lg btn-success btn-block">Create</button>
+                  </div>
                  </div>
                 </div>
+                   {% csrf_token %}
+                   <button type="submit" class="btn btn-lg btn-success btn-block">Create</button>
+                </div>
               </div>
-            </div>
+              
           </form>
         </div>
       </div>

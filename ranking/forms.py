@@ -5,13 +5,17 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from .models import *
 
 
-class RegisterForm(UserCreationForm):
+class RegisterForm(forms.ModelForm):
 
     class Meta:
         model = User
         fields = (
-            "username", "email", "arc_user_name", "password1", "password2",
+            "username", "email", "arc_user_name", "password"
         )
+        widgets = {
+            'email': forms.EmailInput(),
+            'password': forms.PasswordInput(),
+        }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -24,11 +28,8 @@ class RegisterForm(UserCreationForm):
         self.fields['arc_user_name'].widget.attrs['class'] = 'form-control'
         self.fields['arc_user_name'].widget.attrs['placeholder'] = 'AtCoderUserName'
 
-        self.fields['password1'].widget.attrs['class'] = 'form-control'
-        self.fields['password1'].widget.attrs['placeholder'] = 'パスワード'
-
-        self.fields['password2'].widget.attrs['class'] = 'form-control'
-        self.fields['password2'].widget.attrs['placeholder'] = 'パスワード（確認）'
+        self.fields['password'].widget.attrs['class'] = 'form-control'
+        self.fields['password'].widget.attrs['placeholder'] = 'パスワード'
 
 
 class CreatePostsForm(forms.ModelForm):
@@ -45,6 +46,15 @@ class CreatePostsForm(forms.ModelForm):
     pub_date = forms.DateTimeField('date published')
     result_code = forms.CharField(
         widget=forms.Textarea, max_length=500, required=False)
+
+    def clean_result_problem(self):
+        if 'result_problem' not in self.cleaned_data:
+            raise forms.ValidationError("problemを選択してください")
+        return self.cleaned_data.get('result_problem')
+
+    def clean(self):
+        self.clean_result_problem()
+        return super(CreatePostsForm, self).clean()
 
     class Meta:
         model = Result
@@ -82,6 +92,7 @@ class CreateProblemForm(forms.ModelForm):
     )
     problem_name = forms.ChoiceField(
         widget=forms.Select, choices=PROBLEM_CHOICES)
+    problem_num = forms.CharField(max_length='3')
 
 
 class LoginForm(AuthenticationForm):

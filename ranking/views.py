@@ -1,10 +1,12 @@
 from django.core.urlresolvers import reverse
 from django.template import loader
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import views as auth_views
 from django.views.generic import TemplateView, CreateView
 from django.http import HttpResponseRedirect
+from django.contrib.auth import authenticate
+
 
 from atcoder_ranking.commons import *
 
@@ -55,7 +57,9 @@ class CreateUserView(CreateView):
             user = User(
                 username=data['username'],
                 arc_user_name=data['arc_user_name'],
-                email=data['email'],)
+                email=data['email'],
+                password=data['password']
+            )
             user.save()
             print("saved")
         return render(self.request, self.template_name, {'form': form})
@@ -63,10 +67,12 @@ class CreateUserView(CreateView):
 
 class UsersView(LoginRequiredMixin, TemplateView):
     template_name = 'users.html'
-    context_object_name = 'latest_rank'
+    model = User
 
     def get(self, request, *args, **kwargs):
         context = super(UsersView, self).get_context_data(**kwargs)
+        users = User.objects.all()
+        context['users'] = users
         return render(self.request, self.template_name, context)
 
 
@@ -158,18 +164,18 @@ class CreatePostsView(LoginRequiredMixin, CreateView):
         form = self.form_class(request.POST)
         current_user = request.user.id
 
-        if form.is_valid():
-            data = form.cleaned_data
-            result = Result(user=User(id='current_user'),
-                            result_problem=data['result_problem'],
-                            result_language=data['result_language'],
-                            result_coding_time=data['result_coding_time'],
-                            result_running_time=data['result_running_time'],
-                            pub_date=data['pub_date'],
-                            result_code=data['result_code']
-                            )
-            result.save()
-            print("saved")
+        # if form.is_valid():
+        data = form.cleaned_data
+        result = Result(user=User(id='current_user'),
+                        result_problem=data['result_problem'],
+                        result_language=data['result_language'],
+                        result_coding_time=data['result_coding_time'],
+                        result_running_time=data['result_running_time'],
+                        pub_date=data['pub_date'],
+                        result_code=data['result_code']
+                        )
+        result.save()
+        print("saved")
         return render(self.request, self.template_name, {'form': form})
 
 
@@ -178,7 +184,7 @@ class PostsView(LoginRequiredMixin, TemplateView):
 
     def get(self, request, *args, **kwargs):
         context = super(PostsView, self).get_context_data(**kwargs)
-        results = Result.objects.prefetch_related()
+        results = Result.objects.all()
         context['results'] = results
         return render(self.request, self.template_name, context)
 
@@ -200,6 +206,35 @@ def login(request):
         'authentication_form': LoginForm
     }
     return auth_views.login(request, **context)
+
+
+class LoginView(TemplateView):
+    template_name = "login.html"
+
+    def get(self, _, *args, **kwargs):
+        if self.request.user.is_authenticated():
+            return redirect(self.get_next_redirect_url())
+        else:
+            kwargs = {'template_name': 'login.html'}
+            return auth_views.login(self.request, *args, **kwargs)
+
+    def post(self, _, *args, **kwargs):
+        username = self.request.POST['username']
+        password = self.request.POST['password']
+        user = authenticate(username=username, password=password)
+        if user is not None and user.is_active:
+            auth_views.login(self.request, user)
+            return redirect(self.get_next_redirect_url())
+        else:
+            kwargs = {'template_name': 'login.html'}
+            return auth_views.login(self.request, *args, **kwargs)
+
+    def get_next_redirect_url(self):
+        redirect_url = self.request.GET.get('next')
+        if not redirect_url or redirect_url == '/':
+            redirect_url = '/ranking/'
+
+        return redirect_url
 
 
 def logout(request):

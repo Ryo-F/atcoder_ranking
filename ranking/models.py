@@ -7,8 +7,7 @@ class User(AbstractBaseUser):
     arc_user_name = models.CharField(max_length=15, default='')
     email = models.EmailField(
         verbose_name='email address', max_length=185, blank=False, unique=True, default='')
-    is_validated = models.BooleanField(default=False)
-    # answered_problem = models.ManyToManyField(AtCoderProblem, blank=True)
+    answered_problem = models.ManyToManyField('AtCoderProblem', blank=True)
     USERNAME_FIELD = 'identifier'
     REQUIRED_FIELDS = ['email']
 
@@ -17,7 +16,7 @@ class User(AbstractBaseUser):
 
 
 class AtCoderProblem(models.Model):
-    user = models.ManyToManyField(User)
+    users = models.ManyToManyField('User')
     problem_name = models.CharField(max_length=20)
     task_a = models.CharField(max_length=500, blank=True, null=True)
     task_b = models.CharField(max_length=500, blank=True, null=True)

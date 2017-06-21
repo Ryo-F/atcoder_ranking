@@ -23,30 +23,26 @@
                       <div class="col-xs-12 col-sm-6">
                         <div class="form-group">
                         {{ form.email }}
+                        {{ form.email.errors }}
+
                       </div>
                      </div>
                    </div>
                    <div class="row">
                      <div class="col-xs-12 col-sm-6">
                        <div class="form-group">
-                        {{ form.password1 }}
-                        {{ form.password1.errors }}
+                        {{ form.password }}
+                        {{ form.password.errors }}
                       </div>
                      </div>
                       <div class="col-xs-12 col-sm-6">
                         <div class="form-group">
-                        {{ form.password2 }}
-                        {{ form.password2.errors }}
+                        {{ form.arc_user_name }}
+                        {{ form.arc_user_name.errors }}
                       </div>
                      </div>
                    </div>
-                    <div class="row">
-                     <div class="col-xs-12 col-sm-6">
-                       <div class="form-group">
-                        {{ form.arc_user_name }}
-                      </div>
-                     </div>
-                     </div>
+
                    </div>
                    {% csrf_token %}
                    <button type="submit" class="btn btn-lg btn-success btn-block">Sign Up</button>
