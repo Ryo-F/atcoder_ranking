@@ -22,26 +22,25 @@
                                 <th>User</th>
                                 <th>Problem</th>
                                 <th>Language</th>
-                                <th>Coding Time</th>
-                                <th>Runnning Time</th>
+                                <th>Coding Time[min]</th>
+                                <th>Runnning Time[ms]</th>
                                 <th>Pub Date</th>
                                 <th>Code</th>
                             </tr>
                         </thead>
                         <tbody>
                           <tr class="odd">
-                              <td>Tarou</td>
-                              <td>AtCoder Beginner Conetest 064</td>
+                              <td>Example</td>
+                              <td>AtCoder Beginner Conetest 001</td>
                               <td>Python</td>
-                              <td>10:00:00</td>
-                              <td>3ms</td>
-                              <td>2017/6/9</td>
-                              <td>
-                                <a href='/ranking/posts/?$'>◯</a></td>
+                              <td>10</td>
+                              <td>3</td>
+                              <td>June 22, 2017, 0:00 a.m.</td>
+                              <td>◯</td>
                           </tr>
                           {% for result in results %}
                             <tr>
-                              <td>{{result.user.id}}</td>
+                              <td>{{result.user}}</td>
                               <td>{{result.result_problem}}</td>
                               <td>{{result.result_language}}</td>
                               <td>{{result.result_coding_time}}</td>

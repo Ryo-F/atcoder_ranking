@@ -33,6 +33,48 @@ class RegisterForm(forms.ModelForm):
 
 
 class CreatePostsForm(forms.ModelForm):
+
+    class Meta:
+        model = Result
+        fields = (
+            "result_problem", "result_language", "result_coding_time", "result_running_time",
+            "result_code"
+        )
+        widgets = {
+            'result_language': forms.Select,
+            'result_code': forms.Textarea,
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields['result_problem'].widget.attrs['class'] = 'form-control'
+
+        self.fields['result_language'].widget.attrs['class'] = 'form-control'
+        self.fields['result_language'].widget.attrs['placeholder'] = 'Language'
+
+        self.fields['result_coding_time'].widget.attrs['class'] = 'form-control'
+        self.fields['result_coding_time'].widget.attrs['placeholder'] = 'Coding_Time'
+
+        self.fields['result_running_time'].widget.attrs['class'] = 'form-control'
+        self.fields['result_running_time'].widget.attrs['placeholder'] = 'Running_Time'
+
+        self.fields['result_code'].widget.attrs['class'] = 'form-control'
+        self.fields['result_code'].widget.attrs['placeholder'] = 'Code'
+
+
+'''
+class CustomForm(forms.Form):
+    error_messages = {'required': 'この項目は必須です', 'invalid': '有効な値を入力してください'}
+
+    def __init__(self, *args, **kwargs):
+        super(CustomForm, self).__init__(*args, **kwargs)
+
+        for field in list(self.fields.values()):
+            field.error_messages = self.error_messages
+
+
+class CreatePostsForm(CustomForm):
     LANGUAGE_CHOICES = (
         (1, 'Python'),
         (2, 'C++'),
@@ -55,33 +97,7 @@ class CreatePostsForm(forms.ModelForm):
     def clean(self):
         self.clean_result_problem()
         return super(CreatePostsForm, self).clean()
-
-    class Meta:
-        model = Result
-        fields = (
-            "result_problem", "result_language", "result_coding_time", "result_running_time",
-            "pub_date", "result_code"
-        )
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-        self.fields['result_problem'].widget.attrs['class'] = 'form-control'
-
-        self.fields['result_language'].widget.attrs['class'] = 'form-control'
-        self.fields['result_language'].widget.attrs['placeholder'] = 'Language'
-
-        self.fields['result_coding_time'].widget.attrs['class'] = 'form-control'
-        self.fields['result_coding_time'].widget.attrs['placeholder'] = 'Coding_Time'
-
-        self.fields['result_running_time'].widget.attrs['class'] = 'form-control'
-        self.fields['result_running_time'].widget.attrs['placeholder'] = 'Running_Time'
-
-        self.fields['pub_date'].widget.attrs['class'] = 'form-control'
-        self.fields['pub_date'].widget.attrs['placeholder'] = '2017/05/31'
-
-        self.fields['result_code'].widget.attrs['class'] = 'form-control'
-        self.fields['result_code'].widget.attrs['placeholder'] = 'Code'
+'''
 
 
 class CreateProblemForm(forms.ModelForm):

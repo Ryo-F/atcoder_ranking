@@ -24,10 +24,7 @@
                                 <th>B</th>
                                 <th>C</th>
                                 <th>D</th>
-                                {% if problem.task_e  %}
-                                <th>E</th>
-                                <th>F</th>
-                                {% endif %}
+
                             </tr>
                         </thead>
                         <tbody>
@@ -39,10 +36,10 @@
                               <td>{{problem.task_b}}</td>
                               <td>{{problem.task_c}}</td>
                               <td>{{problem.task_d}}</td>
-                                {% if problem.task_e  %}
-                                <td>{{problem.task_e}}</td>
-                                <td>{{problem.task_f}}</td>
-                                {% endif %}
+                              {% if problem.task_e  %}<td>{{problem.task_e}}</td>
+                              {% endif %}
+                              {% if problem.task_f  %}<td>{{problem.task_f}}</td>
+                              {% endif %}
                             </tr>
                             {% endautoescape %}
                           {% endfor %}
