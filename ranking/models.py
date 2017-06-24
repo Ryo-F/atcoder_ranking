@@ -99,6 +99,18 @@ class User(AbstractBaseUser):
 
 class AtCoderProblem(models.Model):
 
+    '''
+    フィールドに、problem_flg = IntegerField みたいに作って、
+    定数として
+    TYPE_BASIC = 0
+    TYPE_REGULAR = 1
+    TYPE_GRAD = 2
+    みたいにしたらわかりやすいかも。
+
+    task_a ~ task_fまで作って、BasicとかRegularでない問題に関してはNoneを入れるようにすれば
+    スッキリかけるかも。
+    '''
+
     users = models.ManyToManyField('User')
     problem_name = models.CharField(max_length=20)
     task_a = models.CharField(
@@ -119,6 +131,20 @@ class AtCoderProblem(models.Model):
 
 
 class Result(models.Model):
+
+    '''
+    これも上と同じやけど
+    LANGUAGE_OTHERS = 0
+    LANGUAGE_PYTHON = 1
+    LANGUAGE_CPP = 2
+    みたいにしたら、あとあと言語を増やそうとした時にやりやすいかも。
+    関数型言語なら一桁、低レイアの言語なら20台、高級なら30台とか決めてやると
+    仕分けとかしようと思った時便利！
+
+    こんな感じで定数として数字を設定するのは結構よくやるし、かなり便利やから
+    やってみて〜
+    '''
+
     LANGUAGE_CHOICES = (
         ('Python', 'Python'),
         ('C++', 'C++'),
