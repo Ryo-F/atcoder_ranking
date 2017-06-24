@@ -7,19 +7,11 @@ from ranking.models import *
 class UserFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = User
-<<<<<<< HEAD
     username = factory.Sequence(lambda n: 'testing_user{}'.format(n))
     arc_user_name = factory.Faker('name')
     email = factory.Sequence(lambda n: 'testuser{}@gmail.com'.format(n))
     password = factory.PostGenerationMethodCall(
         'set_password', 'ranking_password')
-=======
-    username = factory.Faker('name')
-    arc_user_name = factory.Faker('name')
-    email = factory.Sequence(lambda n: 'testuser{}@gmail.com'.format(n))
-    password = factory.PostGenerationMethodCall(
-        'set_password', 'scouty_password')
->>>>>>> 0c512f327f98e71dd20af618735ccbbf7d716b61
 
 
 class AtCoderProblemFactory(factory.django.DjangoModelFactory):
