@@ -219,17 +219,16 @@ class GetProblemsView(LoginRequiredMixin, TemplateView):
 
 class CreatePostsView(LoginRequiredMixin, TemplateView):
     template_name = 'create_posts.html'
-    model = Result
     form_class = CreatePostsForm
-    success_url = '/ranking/posts/'
 
     def post(self, request, *args, **kwargs):
-        form = self.form_class(request.POST)
-        print("posted")
-        if form.is_valid():
+        form = self.form_class(self.request.POST)
+        if not form.is_valid():
+            return render(self.request, self.template_name, {'form': form})
+        else:
             now = timezone.now()
             data = form.cleaned_data
-            result = Result(user=request.user,
+            result = Result(user=self.request.user,
                             result_problem=data['result_problem'],
                             result_language=data['result_language'],
                             result_coding_time=data['result_coding_time'],
@@ -238,11 +237,9 @@ class CreatePostsView(LoginRequiredMixin, TemplateView):
                             result_code=data['result_code']
                             )
             result.save()
-            print("saved")
-            return render(self.request, 'posts_done.html', {'form': form})
 
-        else:
-            return render(self.request, self.template_name, {'form': form})
+            # 確認ページより、一覧にリダイレクトした方がいいかも？
+            return redirect('/ranking/problems/')
 
 
 class PostsView(LoginRequiredMixin, TemplateView):
