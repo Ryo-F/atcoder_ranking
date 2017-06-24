@@ -7,14 +7,9 @@ from django.views.generic import TemplateView, CreateView
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate
 from django.utils import timezone
+from django.http import HttpResponse
 
-
-from atcoder_ranking.commons import *
-from bs4 import BeautifulSoup
-import requests
-import re
-from collections import Counter
-
+from atcoder_ranking.commons.libraries import *
 from .forms import RegisterForm, CreatePostsForm, LoginForm
 from .models import *
 
@@ -28,14 +23,50 @@ class TopView(TemplateView):
         return render(self.request, self.template_name, context)
 
 
+def plotResults(request):
+    users = User.objects
+    results = Result.objects
+    users_list = []
+    python_len_list = np.array([])
+    cpp_len_list = np.array([])
+    others_len_list = np.array([])
+    for user in users.all():
+        users_list.append(str(user))
+        python_len_list = np.append(python_len_list,
+                                    len(results.filter(user=user, result_language='Python')) * 100)
+        cpp_len_list = np.append(cpp_len_list,
+                                 len(results.filter(user=user, result_language='C++')) * 100)
+        others_len_list = np.append(others_len_list,
+                                    len(results.filter(user=user, result_language='Others')) * 100)
+    fig = Figure()
+    ax = fig.add_subplot(1, 1, 1)
+
+    left = np.arange(len(users_list))
+
+    p1 = ax.barh(left, others_len_list, color="blue")
+    p2 = ax.barh(left, cpp_len_list,
+                 left=others_len_list, color="skyblue")
+    p3 = ax.barh(left, python_len_list, left=cpp_len_list +
+                 others_len_list, color="lightblue")
+    ax.legend((p1[0], p2[0], p3[0]), ("Others", "C++", "Python"))
+    ax.set_xlabel('Score')
+    ax.set_ylabel('Users')
+    ax.set_yticklabels(users_list, fontdict=None, minor=False)
+    canvas = FigureCanvas(fig)
+    response = HttpResponse(content_type='image/png')
+    canvas.print_png(response)
+
+    return response
+
+
 class IndexView(LoginRequiredMixin, TemplateView):
     template_name = 'index.html'
 
     def get(self, request, *args, **kwargs):
         context = super(IndexView, self).get_context_data(**kwargs)
-        users = User.objects.all()
+        users = User.objects
         results = Result.objects
-        for user in users:
+        for user in users.all():
             user.score = len(results.filter(user=user)) * 100
             language_list = [
                 result.result_language for result in results.filter(user=user)]
@@ -43,8 +74,9 @@ class IndexView(LoginRequiredMixin, TemplateView):
                 user.main_language = Counter(
                     language_list).most_common(1)[0][0]
             user.save()
-        user_rank = User.objects.order_by('-score')
+        user_rank = users.order_by('-score')
         context['users'] = user_rank[:3]
+        # context['graph'] = create_graph(users, results)
         return render(self.request, self.template_name, context)
 
 
@@ -148,14 +180,14 @@ class GetProblemsView(LoginRequiredMixin, TemplateView):
                     tasks_dict = get_tasks(contest)
                     problem = AtCoderProblem(
                         problem_name=contest,
-                        task_a=tasks_dict['C'],
-                        task_b=tasks_dict['D'],
-                        task_c=tasks_dict['E'],
-                        task_d=tasks_dict['F'],
+                        task_c=tasks_dict['C'],
+                        task_d=tasks_dict['D'],
+                        task_e=tasks_dict['E'],
+                        task_f=tasks_dict['F'],
                     )
                 elif "Grand" in contest:
                     tasks_dict = get_tasks(contest)
-                    problem = AGCProblem(
+                    problem = AtCoderProblem(
                         problem_name=contest,
                         task_a=tasks_dict['A'],
                         task_b=tasks_dict['B'],
@@ -212,7 +244,7 @@ class PostsView(LoginRequiredMixin, TemplateView):
     def get(self, request, *args, **kwargs):
         context = super(PostsView, self).get_context_data(**kwargs)
         results = Result.objects.all()
-        context['results'] = results
+        context['results'] = results[::-1][:100]
         return render(self.request, self.template_name, context)
 
 
@@ -237,17 +269,20 @@ def login(request):
 
 class LoginView(TemplateView):
     template_name = "login.html"
+    form_class = LoginForm
 
     def get(self, _, *args, **kwargs):
         if self.request.user.is_authenticated():
             return redirect(self.get_next_redirect_url())
         else:
-            kwargs = {'template_name': 'login.html'}
-            return auth_views.login(self.request, *args, **kwargs)
+            form = self.form_class(self.request.POST)
+            return render(self.request, self.template_name, {'form': form})
+            # return auth_views.login(self.request, *args, **kwargs)
 
     def post(self, _, *args, **kwargs):
-        username = self.request.POST['username']
-        password = self.request.POST['password']
+        form = self.form_class(self.request.POST)
+        username = form['username']
+        password = form['password']
         user = authenticate(username=username, password=password)
         if user is not None and user.is_active:
             auth_views.login(self.request, user)
@@ -258,7 +293,7 @@ class LoginView(TemplateView):
 
     def get_next_redirect_url(self):
         redirect_url = self.request.GET.get('next')
-        if not redirect_url or redirect_url == '/':
+        if not redirect_url or redirect_url == '/ranking/':
             redirect_url = '/ranking/'
 
         return redirect_url

@@ -54,7 +54,7 @@ class User(AbstractBaseUser):
                                 #             '@/./+/-/_ characters')
                                 )
     arc_user_name = models.CharField(
-        _('arc name'), max_length=15, blank=True, unique=True)
+        _('arc name'), max_length=15, blank=True)
     email = models.EmailField(
         verbose_name='email address', max_length=255, unique=True)
     is_active = models.BooleanField(default=True)
@@ -101,18 +101,21 @@ class AtCoderProblem(models.Model):
 
     users = models.ManyToManyField('User')
     problem_name = models.CharField(max_length=20)
-    task_a = models.CharField(max_length=500, blank=True, null=True)
-    task_b = models.CharField(max_length=500, blank=True, null=True)
-    task_c = models.CharField(max_length=500, blank=True, null=True)
-    task_d = models.CharField(max_length=500, blank=True, null=True)
+    task_a = models.CharField(
+        max_length=500, default='-', blank=True, null=True)
+    task_b = models.CharField(
+        max_length=500, default='-', blank=True, null=True)
+    task_c = models.CharField(
+        max_length=500, default='-', blank=True, null=True)
+    task_d = models.CharField(
+        max_length=500, default='-', blank=True, null=True)
+    task_e = models.CharField(
+        max_length=500, default='-', blank=True, null=True)
+    task_f = models.CharField(
+        max_length=500, default='-', blank=True, null=True)
 
     def __str__(self):
         return self.problem_name
-
-
-class AGCProblem(AtCoderProblem):
-    task_e = models.CharField(max_length=500, blank=True, null=True)
-    task_f = models.CharField(max_length=500, blank=True, null=True)
 
 
 class Result(models.Model):

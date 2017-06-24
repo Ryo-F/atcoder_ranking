@@ -9,9 +9,9 @@ urlpatterns = [
 
     url(r'^$', ranking_view.TopView.as_view()),
     url(r'^top/', ranking_view.TopView.as_view()),
-
     # ranking
     url(r'^ranking/?$', ranking_view.IndexView.as_view()),
+    url(r'^ranking/result.png$', ranking_view.plotResults),
     url(r'^ranking/mypage/$', ranking_view.MyPageView.as_view()),
     url(r'^ranking/create/$', ranking_view.CreateUserView.as_view()),
     url(r'^ranking/users/$', ranking_view.UsersView.as_view()),
