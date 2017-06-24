@@ -99,6 +99,18 @@ class User(AbstractBaseUser):
 
 class AtCoderProblem(models.Model):
 
+    '''
+    フィールドに、problem_flg = IntegerField みたいに作って、
+    定数として
+    TYPE_BASIC = 0
+    TYPE_REGULAR = 1
+    TYPE_GRAD = 2
+    みたいにしたらわかりやすいかも。
+
+    task_a ~ task_fまで作って、BasicとかRegularでない問題に関してはNoneを入れるようにすれば
+    スッキリかけるかも。
+    '''
+
     users = models.ManyToManyField('User')
     problem_name = models.CharField(max_length=20)
     task_a = models.CharField(
