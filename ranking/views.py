@@ -141,10 +141,17 @@ class AtCoderProblemsView(LoginRequiredMixin, TemplateView):
 
 
 class GetProblemsView(LoginRequiredMixin, TemplateView):
-    model = AtCoderProblem, User
 
     def get(self, request, *args, **kwargs):
         context = super(GetProblemsView, self).get_context_data(**kwargs)
+
+        '''
+        関数を入れ子にしすぎて読みにくくなってる！
+
+        get_context_dataをオーバーライドして、その中で関数使わずにスッキリ完結させて！
+        スクレイプするところまで全部get_context_dataの中で書いてもいいと思うけど、それが
+        嫌だったらgetの中に分けて書くとか、一つぐらいならメソッド作ってもいいかも（読みやすくなるなら）
+        '''
 
         def get_soup(url):
             html = requests.get(url).text
