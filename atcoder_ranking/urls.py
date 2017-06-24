@@ -9,6 +9,7 @@ urlpatterns = [
     # admin
     url(r'^admin/?', admin.site.urls),
 
+    # top page
     url(r'^$', ranking_view.TopView.as_view()),
     url(r'^top/', ranking_view.TopView.as_view()),
 

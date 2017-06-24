@@ -5,13 +5,17 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from .models import *
 
 
-class RegisterForm(UserCreationForm):
+class RegisterForm(forms.ModelForm):
 
     class Meta:
         model = User
         fields = (
-            "username", "email", "arc_user_name", "password1", "password2",
+            "username", "email", "arc_user_name", "password"
         )
+        widgets = {
+            'email': forms.EmailInput(),
+            'password': forms.PasswordInput(),
+        }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -24,34 +28,22 @@ class RegisterForm(UserCreationForm):
         self.fields['arc_user_name'].widget.attrs['class'] = 'form-control'
         self.fields['arc_user_name'].widget.attrs['placeholder'] = 'AtCoderUserName'
 
-        self.fields['password1'].widget.attrs['class'] = 'form-control'
-        self.fields['password1'].widget.attrs['placeholder'] = 'パスワード'
-
-        self.fields['password2'].widget.attrs['class'] = 'form-control'
-        self.fields['password2'].widget.attrs['placeholder'] = 'パスワード（確認）'
+        self.fields['password'].widget.attrs['class'] = 'form-control'
+        self.fields['password'].widget.attrs['placeholder'] = 'パスワード'
 
 
 class CreatePostsForm(forms.ModelForm):
-    LANGUAGE_CHOICES = (
-        (1, 'Python'),
-        (2, 'C++'),
-        (3, 'Others')
-    )
-    result_problem = forms.ModelChoiceField(AtCoderProblem.objects.all())
-    result_language = forms.ChoiceField(
-        widget=forms.Select, choices=LANGUAGE_CHOICES)
-    result_coding_time = forms.IntegerField()
-    result_running_time = forms.IntegerField()
-    pub_date = forms.DateTimeField('date published')
-    result_code = forms.CharField(
-        widget=forms.Textarea, max_length=500, required=False)
 
     class Meta:
         model = Result
         fields = (
             "result_problem", "result_language", "result_coding_time", "result_running_time",
-            "pub_date", "result_code"
+            "result_code"
         )
+        widgets = {
+            'result_language': forms.Select,
+            'result_code': forms.Textarea,
+        }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -67,9 +59,6 @@ class CreatePostsForm(forms.ModelForm):
         self.fields['result_running_time'].widget.attrs['class'] = 'form-control'
         self.fields['result_running_time'].widget.attrs['placeholder'] = 'Running_Time'
 
-        self.fields['pub_date'].widget.attrs['class'] = 'form-control'
-        self.fields['pub_date'].widget.attrs['placeholder'] = '2017/05/31'
-
         self.fields['result_code'].widget.attrs['class'] = 'form-control'
         self.fields['result_code'].widget.attrs['placeholder'] = 'Code'
 
@@ -82,9 +71,14 @@ class CreateProblemForm(forms.ModelForm):
     )
     problem_name = forms.ChoiceField(
         widget=forms.Select, choices=PROBLEM_CHOICES)
+    problem_num = forms.CharField(max_length='3')
 
 
-class LoginForm(AuthenticationForm):
+class LoginForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ("username", "password")
+        widgets = {'password': forms.PasswordInput(), }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

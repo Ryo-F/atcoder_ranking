@@ -1,67 +1,64 @@
 {% extends "base.html" %}
-{% block body %}
-<div class="container">
-  <div class="row">
-    <div class="col-md-8 col-md-offset-3">
-      <div class="login-panel panel panel-default">
-          <div class="panel-heading">
+{% block title %}Ranking-Create Post{% endblock %}
+    {% block body %}
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8 col-md-offset-3">
+          <div class="login-panel panel panel-default">
+            <div class="panel-heading">
               <h3 class="panel-title">Create New Posts</h3>
-          </div>
-          <div class="panel-body">
-            <form action="/ranking/create_posts/" method="POST">
-             <div class="row">
-               <div class="col-sm-10">
-                <div class="card">
-                  <div class="card-block">
-                   <div class="row">
-                     <div class="col-xs-12 col-sm-6">
-                       <div class="form-group">
-                        {{ form.result_problem }}
-                        {{ form.result_problem.errors }}
-                      </div>
-                     </div>
-                      <div class="col-xs-12 col-sm-6">
-                        <div class="form-group">
-                        {{ form.result_language }}
-                      </div>
-                     </div>
-                   </div>
-                   <div class="row">
-                     <div class="col-xs-12 col-sm-6">
-                       <div class="form-group">
-                        {{ form.result_coding_time }}
-                        {{ form.result_coding_time.errors }}
-                      </div>
-                     </div>
-                      <div class="col-xs-12 col-sm-6">
-                        <div class="form-group">
-                        {{ form.result_running_time }}
-                      </div>
-                     </div>
-                   </div>
-                    <div class="row">
-                     <div class="col-xs-12 col-sm-6">
-                       <div class="form-group">
-                        {{ form.pub_date }}
-                        {{ form.pub_date.error}}
-                      </div>
-                     </div>
-                      <div class="col-xs-12 col-sm-6">
-                        <div class="form-group">
-                        {{ form.result_code }}
-                      </div>
-                     </div>
-                   </div>
-                   {% csrf_token %}
-                   <button type="submit" class="btn btn-lg btn-success btn-block">Create</button>
-                 </div>
-                </div>
-              </div>
             </div>
-          </form>
+            <div class="panel-body">
+              <form action="/ranking/create_posts/" method="POST">
+                <div class="row">
+                  <div class="col-sm-10">
+                    <div class="card">
+                      <div class="card-block">
+                        <div class="row">
+                          <div class="col-xs-12 col-sm-6">
+                            <div class="form-group">
+                              {{ form.result_problem }}
+                              {{ form.result_problem.errors }}
+                            </div>
+                          </div>
+                          <div class="col-xs-12 col-sm-6">
+                            <div class="form-group">
+                              {{ form.result_language }}
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-xs-12 col-sm-6">
+                            <div class="form-group">
+                              {{ form.result_coding_time }}
+                              {{ form.result_coding_time.errors }}
+                            </div>
+                          </div>
+                          <div class="col-xs-12 col-sm-6">
+                            <div class="form-group">
+                              {{ form.result_running_time }}
+                              {{ form.result_running_time.errors }}
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-xs-12 col-sm-12">
+                            <div class="form-group">
+                            {{ form.result_code }}
+                            {{ form.result_code.errors }}
+                            </div>
+                          </div>
+                        </div>
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-lg btn-success btn-block">Create</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</div>
-{% endblock %}
+    {% endblock %}

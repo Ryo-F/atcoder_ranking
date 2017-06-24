@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
+  <head>
     {% load staticfiles %}
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,13 +11,8 @@
 
     <title>AtCoder Ranking</title>
 
-    <!-- Bootstrap Core CSS -->
     <link href="{% static "ranking/css/bootstrap.min.css" %}" rel="stylesheet">
-
-    <!-- Custom CSS -->
     <link href="{% static "ranking/css/landing-page.css" %}" rel="stylesheet">
-
-    <!-- Custom Fonts -->
     <link href="{% static "ranking/font-awesome/css/font-awesome.min.css" %}" rel="stylesheet" type="text/css">
     <link href="{% static "ranking/https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" %}" rel="stylesheet" type="text/css">
 
@@ -28,46 +23,38 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-</head>
+  </head>
 
-<body>
-  <nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation">
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation">
       <div class="container topnav">
-          <!-- Brand and toggle get grouped for better mobile display -->
-          <div class="navbar-header">
-              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                      <span class="sr-only">Toggle navigation</span>
-                      <span class="icon-bar"></span>
-                      <span class="icon-bar"></span>
-                      <span class="icon-bar"></span>
-                  </button>
-              <a class="navbar-brand topnav" href="/top/">AtCoder Ranking</a>
-          </div>
-          <!-- Collect the nav links, forms, and other content for toggling -->
-          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-              <ul class="nav navbar-nav navbar-right">
-                  <li>
-                      <a href="#about">About</a>
-                  </li>
-                  <li>
-                      <a href="#services">Services</a>
-                  </li>
-                  <li>
-                      <a href="#contact">Contact</a>
-                  </li>
-              </ul>
-          </div>
-          <!-- /.navbar-collapse -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand topnav" href="/top/">AtCoder Ranking</a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a href="#about">About</a>
+            </li>
+            <li>
+              <a href="#services">Services</a>
+            </li>
+            <li>
+              <a href="#contact">Contact</a>
+            </li>
+          </ul>
+        </div>
       </div>
-      <!-- /.container -->
-  </nav>
+    </nav>
     {% block body %}
     {% endblock %}
-    <!-- jQuery -->
     <script src="{% static 'ranking/js/jquery.js' %}"></script>
-
-    <!-- Bootstrap Core JavaScript -->
     <script src="{% static 'ranking/js/bootstrap.min.js' %}"></script>
-</body>
-
+  </body>
 </html>

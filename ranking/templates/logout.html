@@ -1,13 +1,15 @@
-{% extends "top_base.html" %} {% block body %}
-<div class="container">
-
-    <div class="row">
+{% extends "top_base.html" %}
+{% block title %}Ranking-Logout{% endblock %}
+    {% block body %}
+    <div class="container">
+      <div class="row">
         <div class="col-lg-12">
-            <div class="intro-message" style="center">
-                <h3>Logged out</h3>
-                <h3><a href='/top/'>→ Move to Home page</a></h3>
-            </div>
+          <div class="intro-message" style="center">
+            <h3>Logged out</h3>
+            <h3><a href='/top/'>→ Move to Home page</a></h3>
+            <h3><a href='/ranking/'>→ Use Other Accouunt</a></h3>
+          </div>
         </div>
+      </div>
     </div>
-</div>
-{% endblock %}
+    {% endblock %}
