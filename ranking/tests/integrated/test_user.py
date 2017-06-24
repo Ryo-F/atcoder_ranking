@@ -7,12 +7,22 @@ from ranking.tests.factory import *
 class ServiceTestTool(object):
     @classmethod
     def login(cls, client, user, password):
+<<<<<<< HEAD
         client.post('/ranking/login/',
+=======
+        client.post('/login',
+>>>>>>> 0c512f327f98e71dd20af618735ccbbf7d716b61
                     {'username': user.username, 'password': password},
                     follow=True)
         return client
 
+<<<<<<< HEAD
 # Test ranking is showed
+=======
+# Test ranking is showed,and graph is showed
+
+
+>>>>>>> 0c512f327f98e71dd20af618735ccbbf7d716b61
 class IndexViewTest(TestCase):
     @classmethod
     def setUpTestData(cls):
@@ -24,6 +34,7 @@ class IndexViewTest(TestCase):
         self.user = IndexViewTest.user
         self.atcoderproblem = IndexViewTest.atcoderproblem
         self.result = IndexViewTest.result
+<<<<<<< HEAD
         self.client = ServiceTestTool.login(Client(), IndexViewTest.user, 'ranking_password')
 
     def test_index_ranking(self):
@@ -116,3 +127,94 @@ class PostsViewTest(TestCase):
         self.assertContains(response, users[6].username)
         self.assertNotContains(response, users[0].username)
         self.assertNotContains(response, users[7].username)
+=======
+        self.client = ServiceTestTool.login(
+            Client(), IndexViewTest.user, 'ranking_password')
+
+    def test_index_ranking(self):
+        # create 10 testusers
+        for i in range(10):
+            user = User(
+                username='testing_user{0}'.format(i),
+                arc_user_name='user{0}'.format(i),
+                email='email{0}@email.com'.format(i),
+            )
+            user.set_password('password{0}'.format(i))
+            user.save()
+        # create posts for testusers:
+        for i in range(30):
+            result = Result(user=User(username='testing_user1'),
+                            result_problem=AtCoderProblem.objects.get(id=1),
+                            result_language='Python',
+                            result_coding_time=3,
+                            result_running_time=4,
+                            pub_date=datetime.date(2008, 10, 5),
+                            result_code='sample_code'
+                            )
+            result.save()
+
+        for i in range(10):
+            result = Result(user=User(username='testing_user2'),
+                            result_problem=AtCoderProblem.objects.get(id=1),
+                            result_language='Python',
+                            result_coding_time=3,
+                            result_running_time=4,
+                            pub_date=datetime.date(2008, 10, 5),
+                            result_code='sample_code'
+                            )
+            result.save()
+
+        for i in range(40):
+            result = Result(user=User(username='testing_user3'),
+                            result_problem=AtCoderProblem.objects.get(id=1),
+                            result_language='Python',
+                            result_coding_time=3,
+                            result_running_time=4,
+                            pub_date=datetime.date(2008, 10, 5),
+                            result_code='sample_code'
+                            )
+            result.save()
+
+        for i in range(10):
+            result = Result(user=User(username='testing_user4'),
+                            result_problem=AtCoderProblem.objects.get(id=1),
+                            result_language='Python',
+                            result_coding_time=3,
+                            result_running_time=4,
+                            pub_date=datetime.date(2008, 10, 5),
+                            result_code='sample_code'
+                            )
+            result.save()
+
+        for i in range(20):
+            result = Result(user=User(username='testing_user5'),
+                            result_problem=AtCoderProblem.objects.get(id=1),
+                            result_language='Python',
+                            result_coding_time=3,
+                            result_running_time=4,
+                            pub_date=datetime.date(2008, 10, 5),
+                            result_code='sample_code'
+                            )
+            result.save()
+
+        response = self.client.get('/ranking/')
+
+        self.assertContains(response, "testing_user1")
+        self.assertContains(response, "testing_user3")
+        self.assertContains(response, "testing_user5")
+        self.assertNotContains(response, "testing_user2")
+        self.assertNotContains(response, "testing_user4")
+
+
+'''
+# Test if user is successfully created
+
+
+class UsersViewTest(TestCase):
+
+    # Test if posts is successfully created
+
+
+class PostsViewTest(TestCase):
+'''
+>>>>>>> 0c512f327f98e71dd20af618735ccbbf7d716b61

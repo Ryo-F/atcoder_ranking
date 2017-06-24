@@ -7,6 +7,7 @@
           <div class="login-panel panel panel-default">
             <div class="panel-heading">
               <h3 class="panel-title">Sign Up</h3>
+<<<<<<< HEAD
             </div>
             <div class="panel-body">
               <form action="/ranking/create/" method="POST">
@@ -46,6 +47,43 @@
                       {% csrf_token %}
                       <button type="submit" class="btn btn-lg btn-success btn-block">Sign Up</button>
                      </div>
+=======
+          </div>
+          <div class="panel-body">
+            <form action="/ranking/create/" method="POST">
+             <div class="row">
+               <div class="col-sm-10 offset-sm-1">
+                <div class="card">
+                  <div class="card-block">
+                   <div class="row">
+                     <div class="col-xs-12 col-sm-6">
+                       <div class="form-group">
+                        {{ form.username }}
+                        {{ form.username.errors }}
+                      </div>
+                     </div>
+                      <div class="col-xs-12 col-sm-6">
+                        <div class="form-group">
+                        {{ form.email }}
+                        {{ form.email.errors }}
+                      </div>
+                     </div>
+                   </div>
+                   <div class="row">
+                     <div class="col-xs-12 col-sm-6">
+                       <div class="form-group">
+                        {{ form.password }}
+                        {{ form.password.errors }}
+                      </div>
+                     </div>
+                      <div class="col-xs-12 col-sm-6">
+                        <div class="form-group">
+                        {{ form.arc_user_name }}
+                        {{ form.arc_user_name.errors }}
+                      </div>
+                     </div>
+                   </div>
+>>>>>>> 0c512f327f98e71dd20af618735ccbbf7d716b61
                    </div>
                 </div>
               </form>
