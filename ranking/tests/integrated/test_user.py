@@ -1,6 +1,6 @@
 from django.test import TestCase, Client
 
-from ranking.commons.libraries import *
+from atcoder_ranking.commons.libraries import *
 from ranking.tests.factory import *
 
 
@@ -8,7 +8,7 @@ class ServiceTestTool(object):
     @classmethod
     def login(cls, client, user, password):
         client.post('/login',
-                    {'username': user.identifier, 'password': password},
+                    {'username': user.username, 'password': password},
                     follow=True)
         return client
 
@@ -33,7 +33,7 @@ class IndexViewTest(TestCase):
         # create 10 testusers
         for i in range(10):
             user = User(
-                username='test_user{0}'.format(i),
+                username='testing_user{0}'.format(i),
                 arc_user_name='user{0}'.format(i),
                 email='email{0}@email.com'.format(i),
             )
@@ -41,7 +41,7 @@ class IndexViewTest(TestCase):
             user.save()
         # create posts for testusers:
         for i in range(30):
-            result = Result(user=User(username='test_user1'),
+            result = Result(user=User(username='testing_user1'),
                             result_problem=AtCoderProblem.objects.get(id=1),
                             result_language='Python',
                             result_coding_time=3,
@@ -52,7 +52,7 @@ class IndexViewTest(TestCase):
             result.save()
 
         for i in range(10):
-            result = Result(user=User(username='test_user2'),
+            result = Result(user=User(username='testing_user2'),
                             result_problem=AtCoderProblem.objects.get(id=1),
                             result_language='Python',
                             result_coding_time=3,
@@ -63,7 +63,7 @@ class IndexViewTest(TestCase):
             result.save()
 
         for i in range(40):
-            result = Result(user=User(username='test_user3'),
+            result = Result(user=User(username='testing_user3'),
                             result_problem=AtCoderProblem.objects.get(id=1),
                             result_language='Python',
                             result_coding_time=3,
@@ -74,7 +74,7 @@ class IndexViewTest(TestCase):
             result.save()
 
         for i in range(10):
-            result = Result(user=User(username='test_user4'),
+            result = Result(user=User(username='testing_user4'),
                             result_problem=AtCoderProblem.objects.get(id=1),
                             result_language='Python',
                             result_coding_time=3,
@@ -85,7 +85,7 @@ class IndexViewTest(TestCase):
             result.save()
 
         for i in range(20):
-            result = Result(user=User(username='test_user5'),
+            result = Result(user=User(username='testing_user5'),
                             result_problem=AtCoderProblem.objects.get(id=1),
                             result_language='Python',
                             result_coding_time=3,
@@ -97,11 +97,11 @@ class IndexViewTest(TestCase):
 
         response = self.client.get('/ranking/')
 
-        self.assertContains(response, "test_user1")
-        self.assertContains(response, "test_user3")
-        self.assertContains(response, "test_user5")
-        self.assertNotContains(response, "test_user2")
-        self.assertNotContains(response, "test_user4")
+        self.assertContains(response, "testing_user1")
+        self.assertContains(response, "testing_user3")
+        self.assertContains(response, "testing_user5")
+        self.assertNotContains(response, "testing_user2")
+        self.assertNotContains(response, "testing_user4")
 
 
 '''
