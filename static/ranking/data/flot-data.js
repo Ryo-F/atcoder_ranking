@@ -1,3 +1,6 @@
+// 使ってないデータは消そう！
+// （morris-data.jsとか他の使ってないファイルがあればそれも！）
+
 //Flot Line Chart
 $(document).ready(function() {
 
