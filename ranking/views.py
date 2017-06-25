@@ -248,6 +248,8 @@ class PostsView(LoginRequiredMixin, TemplateView):
     def get(self, request, *args, **kwargs):
         context = super(PostsView, self).get_context_data(**kwargs)
         results = Result.objects.all()
+        # results[::-1][:100] こういう一見して何やってるかわかりにくいところは
+        # わかり安くて短いコメントつけよう〜
         context['results'] = results[::-1][:100]
         return render(self.request, self.template_name, context)
 
