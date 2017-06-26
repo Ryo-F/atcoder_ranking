@@ -10,6 +10,7 @@ urlpatterns = [
     # top page
     url(r'^$', ranking_view.TopView.as_view()),
     url(r'^top/', ranking_view.TopView.as_view()),
+
     # ranking
     url(r'^ranking/?$', ranking_view.IndexView.as_view()),
     url(r'^ranking/result.png$', ranking_view.plotResults),
@@ -19,8 +20,7 @@ urlpatterns = [
     url(r'^ranking/problems/$', ranking_view.AtCoderProblemsView.as_view()),
     url(r'^ranking/get_problems/$', ranking_view.GetProblemsView.as_view()),
     url(r'^ranking/posts/$', ranking_view.PostsView.as_view()),
-    url(r'^ranking/posts/(?P<posts_id>[0-9]+)/$',
-        ranking_view.PostsDetailView.as_view()),
+    url(r'^ranking/posts/(?P<posts_id>[0-9]+)/$',ranking_view.PostsDetailView.as_view()),
     url(r'^ranking/create_posts/$', ranking_view.CreatePostsView.as_view()),
     url(r'^ranking/info/$', TemplateView.as_view(template_name='user_info.html')),
     url(r'^ranking/login/$', ranking_view.LoginView.as_view(), name='login'),

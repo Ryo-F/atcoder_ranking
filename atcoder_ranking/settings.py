@@ -116,7 +116,7 @@ USE_L10N = True
 USE_TZ = True
 
 # LOGIN
-LOGIN_REDIRECT_URL = '/ranking/'
+LOGIN_REDIRECT_URL = '/ranking/mypage/'
 LOGIN_URL = '/ranking/login/'
 
 # Static files (CSS, JavaScript, Images)
