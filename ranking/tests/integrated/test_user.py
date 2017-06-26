@@ -12,7 +12,7 @@ class ServiceTestTool(object):
                     follow=True)
         return client
 
-# Test ranking is showe
+# Test ranking is showed
 class IndexViewTest(TestCase):
     @classmethod
     def setUpTestData(cls):
